@@ -1,5 +1,6 @@
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  * A utility class providing various graph traversal methods using DFS.
@@ -86,7 +87,20 @@ public class Practice {
    * @return A set containing all reachable leaf vertices, or an empty set if vertex is null.
    */
   public <T> Set<Vertex<T>> leaves(Vertex<T> vertex) {
-    return null;
+    Set<Vertex<T>> leaves = new HashSet<>(); 
+    Set<Vertex<T>> visited = new HashSet<>();
+    if (vertex == null) return leaves;
+    Stack<Vertex<T>> stack = new Stack<>();
+
+    stack.add(vertex);
+    while (!stack.isEmpty()) {
+      Vertex<T> current = stack.pop();
+      visited.add(current);
+      if (current.neighbors.isEmpty()) leaves.add(current);
+      else for (var v : current.neighbors) if (!visited.contains(v)) stack.add(v);
+    }
+
+    return leaves;
   }
 
 
