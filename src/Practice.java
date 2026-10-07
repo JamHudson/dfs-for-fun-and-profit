@@ -115,6 +115,18 @@ public class Practice {
    * @return true if all reachable vertices hold odd values, false otherwise
    */
   public boolean allOdd(Vertex<Integer> vertex) {
+    Set<Vertex<Integer>> visited = new HashSet<>();
+    Stack<Vertex<Integer>> stack = new Stack<>();
+    stack.add(vertex);
+
+    while (!stack.isEmpty()) {
+      Vertex<Integer> current = stack.pop();
+      visited.add(current);
+      // If the current node is even
+      if (current.data % 2 == 0) return false;
+      for (var v : current.neighbors) if (!visited.contains(v)) stack.add(v);
+    }
+
     return true;
   }
 
