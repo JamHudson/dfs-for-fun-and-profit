@@ -145,6 +145,19 @@ public class Practice {
    * @throws NullPointerException if either start or end is null.
    */
   public boolean hasStrictlyIncreasingPath(Vertex<Integer> start, Vertex<Integer> end) {
+    if (start == null || end == null) throw new NullPointerException("Start and End cannot be null.");
+    Stack<Vertex<Integer>> stack = new Stack<>();
+    // Interestingly, doesn't need a visited set.
+    stack.add(start);
+
+    while (!stack.isEmpty()) {
+      Vertex<Integer> current = stack.pop();
+      // If this is the target vertex, then that means there is a strictly increasing path
+      if (current == end) return true;
+      // Add all the neighbors that are larger than the current node; traverse only the strictly increasing vertexes.
+      for (var v : current.neighbors) if (v.data > current.data) stack.add(v);
+    }
+
     return false;
   }
 }
